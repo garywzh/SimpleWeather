@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">简单天气</string>
+    <string name="max">最高</string>
+    <string name="min">最低</string>
+</resources>

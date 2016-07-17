@@ -1,0 +1,6 @@
+<resources>
+    <dimen name="cardView_margin_horizontal">8dp</dimen>
+    <dimen name="cardView_margin_vertival">4dp</dimen>
+    <dimen name="cardView_inner_padding">16dp</dimen>
+    <dimen name="condition_icon_size">128dp</dimen>
+</resources>

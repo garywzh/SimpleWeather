@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Simple Weather</string>
+    <string name="max">Max</string>
+    <string name="min">Min</string>
+</resources>
