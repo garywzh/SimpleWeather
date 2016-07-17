@@ -3,23 +3,25 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/cardView_margin_horizontal"
-    android:layout_marginRight="@dimen/cardView_margin_horizontal"
-    android:layout_marginTop="@dimen/cardView_margin_vertival"
-    android:layout_marginBottom="@dimen/cardView_margin_vertival"
-    android:visibility="gone">
+    android:layout_marginLeft="@dimen/cardview_margin_horizontal"
+    android:layout_marginRight="@dimen/cardview_margin_horizontal"
+    android:layout_marginTop="@dimen/cardview_margin_vertical"
+    android:layout_marginBottom="@dimen/cardview_margin_vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/cardView_inner_padding">
+        android:paddingLeft="@dimen/cardview_padding"
+        android:paddingRight="@dimen/cardview_padding"
+        android:paddingTop="@dimen/cardview_padding"
+        android:paddingBottom="@dimen/cardview_padding_small">
 
         <TextView
             android:id="@+id/district"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="Fengnan"
-            style="@style/Base.TextAppearance.AppCompat.Headline" />
+            style="@style/TextAppearance.AppCompat.Headline" />
 
         <TextView
             android:id="@+id/city"
@@ -28,8 +30,7 @@
             android:layout_toRightOf="@id/district"
             android:layout_alignBaseline="@id/district"
             android:layout_marginLeft="4dp"
-            tools:text="Tangshan"
-            style="@style/Base.TextAppearance.AppCompat.Body2" />
+            tools:text="Tangshan" />
 
         <TextView
             android:id="@+id/temperatureMaxMin"
@@ -37,8 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/district"
             android:layout_marginTop="8dp"
-            tools:text="Day 30° - Night 18°"
-            style="@style/Base.TextAppearance.AppCompat.Body2" />
+            tools:text="Day 30° - Night 18°" />
 
         <TextView
             android:id="@+id/temperature"
@@ -68,8 +68,8 @@
 
             <ImageView
                 android:id="@+id/condition_icon"
-                android:layout_width="@dimen/condition_icon_size"
-                android:layout_height="@dimen/condition_icon_size"
+                android:layout_width="@dimen/overview_icon_size"
+                android:layout_height="@dimen/overview_icon_size"
                 tools:src="@drawable/clear" />
 
             <TextView
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/condition_icon"
                 tools:text="Windy"
-                style="@style/TextAppearance.AppCompat.Body2" />
+                style="@style/TextAppearance.AppCompat.Subhead" />
 
         </LinearLayout>
 

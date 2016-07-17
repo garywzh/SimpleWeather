@@ -1,6 +1,11 @@
 <resources>
-    <dimen name="cardView_margin_horizontal">8dp</dimen>
-    <dimen name="cardView_margin_vertival">4dp</dimen>
-    <dimen name="cardView_inner_padding">16dp</dimen>
-    <dimen name="condition_icon_size">128dp</dimen>
+    <dimen name="cardview_margin_horizontal">8dp</dimen>
+    <dimen name="cardview_margin_vertical">4dp</dimen>
+    <dimen name="cardview_padding">16dp</dimen>
+    <dimen name="cardview_padding_small">8dp</dimen>
+    <dimen name="overview_icon_size">128dp</dimen>
+
+    <dimen name="daily_padding_horizontal">8dp</dimen>
+    <dimen name="daily_padding_vertical">16dp</dimen>
+    <dimen name="daily_icon_size">64dp</dimen>
 </resources>

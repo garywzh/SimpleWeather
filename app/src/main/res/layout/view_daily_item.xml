@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/daily_padding_horizontal"
+    android:paddingRight="@dimen/daily_padding_horizontal"
+    android:paddingTop="@dimen/daily_padding_vertical"
+    android:paddingBottom="@dimen/daily_padding_vertical"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:id="@+id/week_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Mon" />
+
+    <ImageView
+        android:id="@+id/condition_icon"
+        android:layout_width="@dimen/daily_icon_size"
+        android:layout_height="@dimen/daily_icon_size"
+        tools:src="@drawable/clear" />
+
+    <TextView
+        android:id="@+id/max_temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="31°" />
+
+    <TextView
+        android:id="@+id/min_temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="23°" />
+</LinearLayout>

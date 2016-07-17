@@ -8,13 +8,9 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
 import com.tencent.map.geolocation.TencentLocationManager;
@@ -25,27 +21,21 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.schedulers.Schedulers;
 import xyz.garywzh.simpleweather.R;
+import xyz.garywzh.simpleweather.model.DataRepo;
 import xyz.garywzh.simpleweather.model.Forecast;
 import xyz.garywzh.simpleweather.network.ForecastService;
 import xyz.garywzh.simpleweather.network.NetworkHelper;
+import xyz.garywzh.simpleweather.ui.adapter.RootViewAdapter;
 import xyz.garywzh.simpleweather.utils.LogUtil;
 
 public class MainActivity extends AppCompatActivity implements TencentLocationListener {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private static final int COARSE_PERMISSION_REQUEST_CODE = 1;
-    private LinearLayout root;
-    private CardView cardView;
-    private TextView district;
-    private TextView city;
-    private TextView temperatureMaxMin;
-    private TextView temperature;
-    private ImageView condition_icon;
-    private TextView condition;
 
+    private RootViewAdapter rootAdapter;
     private TencentLocationManager mLocationManager;
-    private TencentLocation mLocation;
-    private Forecast mForecast;
+    private DataRepo mDataRepo;
     private boolean fetching = false;
     private boolean alreadyGotData = false;
 
@@ -54,16 +44,12 @@ public class MainActivity extends AppCompatActivity implements TencentLocationLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        root = (LinearLayout) findViewById(R.id.root);
-        cardView = (CardView) findViewById(R.id.card_view);
+        RecyclerView rootRecyclerView = (RecyclerView) findViewById(R.id.root_view);
+        rootRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        rootAdapter = new RootViewAdapter();
+        rootRecyclerView.setAdapter(rootAdapter);
 
-        district = (TextView) findViewById(R.id.district);
-        city = (TextView) findViewById(R.id.city);
-        temperatureMaxMin = (TextView) findViewById(R.id.temperatureMaxMin);
-        temperature = (TextView) findViewById(R.id.temperature);
-        condition_icon = (ImageView) findViewById(R.id.condition_icon);
-        condition = (TextView) findViewById(R.id.condition);
-
+        mDataRepo = new DataRepo();
         mLocationManager = TencentLocationManager.getInstance(this);
         mLocationManager.setCoordinateType(TencentLocationManager.COORDINATE_TYPE_GCJ02);
         checkPermission();
@@ -137,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements TencentLocationLi
 
     private void getData() {
         NetworkHelper.getForecastService()
-                .getForecast(mLocation.getLatitude() + "," + mLocation.getLongitude(), ForecastService.LANG_SIMPLIFIED_CHINESE)
+                .getForecast(mDataRepo.getLocation().getLatitude() + "," + mDataRepo.getLocation().getLongitude(), ForecastService.LANG_SIMPLIFIED_CHINESE)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -164,23 +150,9 @@ public class MainActivity extends AppCompatActivity implements TencentLocationLi
                         mLocationManager.removeUpdates(MainActivity.this);
                         fetching = false;
                         alreadyGotData = true;
-                        mForecast = forecast;
+                        mDataRepo.setForecast(forecast);
 
-                        district.setText(mLocation.getDistrict());
-                        city.setText(mLocation.getCity());
-                        temperatureMaxMin.setText(String.format("%s %d° - %s %d°",
-                                getString(R.string.max),
-                                (int) mForecast.daily.data.get(0).temperatureMax,
-                                getString(R.string.min),
-                                (int) mForecast.daily.data.get(0).temperatureMin));
-                        temperature.setText(String.format("%s",
-                                (int) mForecast.currently.temperature));
-                        condition.setText(mForecast.currently.summary);
-                        cardView.setVisibility(View.VISIBLE);
-                        Glide.with(condition_icon.getContext())
-                                .load(IconDrawableHelper.getDrawable(mForecast.currently.icon))
-                                .crossFade()
-                                .into(condition_icon);
+                        rootAdapter.setData(mDataRepo);
                     }
                 });
     }
@@ -189,10 +161,10 @@ public class MainActivity extends AppCompatActivity implements TencentLocationLi
     @Override
     public void onLocationChanged(TencentLocation location, int error, String reason) {
         if (error == TencentLocation.ERROR_OK) {
-            mLocation = location;
             LogUtil.d(TAG, "location changed" +
-                    "latitude" + mLocation.getLatitude() +
-                    "longitude" + mLocation.getLongitude());
+                    "latitude" + location.getLatitude() +
+                    "longitude" + location.getLongitude());
+            mDataRepo.setLocation(location);
             if (!alreadyGotData && !fetching)
                 getData();
         } else {
