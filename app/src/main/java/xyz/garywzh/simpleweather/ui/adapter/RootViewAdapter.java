@@ -60,7 +60,7 @@ public class RootViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 return new OverViewVH(OverViewCard);
             case TYPE_DAILY:
                 final View dailyCard = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_daily, parent, false);
-                return new dailyVH(dailyCard);
+                return new DailyVH(dailyCard);
             default:
                 LogUtil.e(TAG, "unKnown viewType");
                 return null;
@@ -71,8 +71,8 @@ public class RootViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof OverViewVH) {
             ((OverViewVH) holder).fillData(mDataRepo);
-        } else if (holder instanceof dailyVH) {
-            ((dailyVH) holder).fillData(mDataRepo.getForecast().daily.data);
+        } else if (holder instanceof DailyVH) {
+            ((DailyVH) holder).fillData(mDataRepo.getForecast().daily.data);
         } else {
             LogUtil.e(TAG, "unknown viewHolder");
         }
@@ -114,10 +114,10 @@ public class RootViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    public static class dailyVH extends RecyclerView.ViewHolder {
+    public static class DailyVH extends RecyclerView.ViewHolder {
         private DailyAdapter dailyAdapter;
 
-        public dailyVH(View itemView) {
+        public DailyVH(View itemView) {
             super(itemView);
             RecyclerView dailyRecyclerView = (RecyclerView) itemView.findViewById(R.id.daily);
             dailyRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext(),
