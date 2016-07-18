@@ -13,7 +13,8 @@ android {
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
-        manifestPlaceholders = [TENCENT_MAP_KEY: properties.get('tencentMapKey')]
+        manifestPlaceholders = [TENCENT_MAP_KEY: properties.get('tencentMapKey'),
+                                FORECAST_KEY   : properties.get('forecastKey')]
     }
     buildTypes {
         release {

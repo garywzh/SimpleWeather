@@ -20,6 +20,7 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.schedulers.Schedulers;
+import xyz.garywzh.simpleweather.AppContext;
 import xyz.garywzh.simpleweather.R;
 import xyz.garywzh.simpleweather.model.DataRepo;
 import xyz.garywzh.simpleweather.model.Forecast;
@@ -123,7 +124,9 @@ public class MainActivity extends AppCompatActivity implements TencentLocationLi
 
     private void getData() {
         NetworkHelper.getForecastService()
-                .getForecast(mDataRepo.getLocation().getLatitude() + "," + mDataRepo.getLocation().getLongitude(), ForecastService.LANG_SIMPLIFIED_CHINESE)
+                .getForecast(AppContext.getInstance().getForecastKey(),
+                        mDataRepo.getLocation().getLatitude() + "," + mDataRepo.getLocation().getLongitude(),
+                        ForecastService.LANG_SIMPLIFIED_CHINESE)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
