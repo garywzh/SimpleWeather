@@ -7,5 +7,13 @@
 
     <dimen name="daily_padding_horizontal">8dp</dimen>
     <dimen name="daily_padding_vertical">16dp</dimen>
-    <dimen name="daily_icon_size">64dp</dimen>
+    <dimen name="daily_icon_size">56dp</dimen>
+    <dimen name="daily_detail_padding_vertical">8dp</dimen>
+    <dimen name="daily_detail_icon_size">32dp</dimen>
+    <dimen name="daily_detail_title_margin_left">8dp</dimen>
+    <dimen name="daily_detail_space">2dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="ic_clear_margin">16dp</dimen>
 </resources>

@@ -10,39 +10,43 @@ import android.os.Bundle;
 public class AppContext extends Application {
     public static final String TAG = AppContext.class.getSimpleName();
 
-    private static AppContext mInstance;
-    private String tencentMapKey;
-    private String forecastKey;
+    private static AppContext sInstance;
+    private String mTencentMapKey;
+    private String mForecastKey;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mInstance = this;
+        sInstance = this;
 
         try {
             Bundle bundle = getPackageManager()
                     .getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA)
                     .metaData;
-            tencentMapKey = bundle.getString("TencentMapSDK");
-            forecastKey = bundle.getString("ForecastApiKey");
+            mTencentMapKey = bundle.getString("TencentMapSDK");
+            mForecastKey = bundle.getString("ForecastApiKey");
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
 
-        if (tencentMapKey == null) {
-            throw new RuntimeException("need tencentMapKey in manifest or local.properties");
+        if (mTencentMapKey == null) {
+            throw new RuntimeException("need tencent Map Key in manifest or local.properties");
         }
 
-        if (forecastKey == null) {
-            throw new RuntimeException("need forecastKey in manifest or local.properties");
+        if (mForecastKey == null) {
+            throw new RuntimeException("need forecast Key in manifest or local.properties");
         }
     }
 
     public static AppContext getInstance() {
-        return mInstance;
+        return sInstance;
     }
 
-    public String getForecastKey() {
-        return forecastKey;
+    public String getmForecastKey() {
+        return mForecastKey;
+    }
+
+    public String getmTencentMapKey() {
+        return mTencentMapKey;
     }
 }

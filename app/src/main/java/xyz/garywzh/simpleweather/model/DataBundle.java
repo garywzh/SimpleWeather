@@ -1,18 +1,16 @@
 package xyz.garywzh.simpleweather.model;
 
-import com.tencent.map.geolocation.TencentLocation;
-
 /**
  * Created by garywzh on 2016/7/17.
  */
-public class DataRepo {
-    private TencentLocation location;
+public class DataBundle {
+    private SimpleLocation location;
     private Forecast forecast;
 
-    public DataRepo() {
+    public DataBundle() {
     }
 
-    public DataRepo(TencentLocation location, Forecast forecast) {
+    public DataBundle(SimpleLocation location, Forecast forecast) {
         this.location = location;
         this.forecast = forecast;
     }
@@ -21,7 +19,7 @@ public class DataRepo {
         this.forecast = forecast;
     }
 
-    public void setLocation(TencentLocation location) {
+    public void setLocation(SimpleLocation location) {
         this.location = location;
     }
 
@@ -29,7 +27,7 @@ public class DataRepo {
         return forecast;
     }
 
-    public TencentLocation getLocation() {
+    public SimpleLocation getLocation() {
         return location;
     }
 }

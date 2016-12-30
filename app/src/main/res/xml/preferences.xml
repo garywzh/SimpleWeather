@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="API Key">
+
+        <CheckBoxPreference
+            android:title="Custom Tencent Map Key"
+            android:summaryOn="Enabled"
+            android:summaryOff="Disabled"
+            android:defaultValue="false" />
+        <EditTextPreference
+            android:title="Custom Key"
+            android:summary="type in your key"
+            android:dialogTitle="Key" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Data">
+        <Preference
+            android:title="Clear all"
+            android:summary="All data will be cleared" />
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/local"
+        android:icon="@drawable/ic_location_on_black_24dp"
+        android:title="@string/current_site"/>
+    <group
+        android:id="@+id/group_address"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/manage"
+            android:icon="@drawable/ic_edit_location_black_24dp"
+            android:title="@string/action_manage" />
+    </group>
+</menu>

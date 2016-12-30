@@ -4,18 +4,19 @@ Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    compileSdkVersion 25
+    buildToolsVersion '24.0.3'
 
     defaultConfig {
         applicationId "xyz.garywzh.simpleweather"
-        minSdkVersion 17
-        targetSdkVersion 24
+        minSdkVersion 19
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         manifestPlaceholders = [TENCENT_MAP_KEY: properties.get('tencentMapKey'),
                                 FORECAST_KEY   : properties.get('forecastKey')]
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -25,7 +26,7 @@ android {
 }
 
 ext {
-    support_version = '24.0.0'
+    support_version = '25.1.0'
 }
 
 dependencies {
@@ -34,14 +35,13 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$support_version"
     compile "com.android.support:cardview-v7:$support_version"
     compile "com.android.support:design:$support_version"
-
     compile 'io.reactivex:rxandroid:1.2.1'
-    compile 'io.reactivex:rxjava:1.1.6'
+    compile 'io.reactivex:rxjava:1.1.8'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
-    compile 'com.android.support:support-v4:24.0.0'
-
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.karumi:dexter:3.0.0'
+    compile files('libs/TencentLocationSDK_v4.9.7.12_r247861_161205_1104.jar')
 }

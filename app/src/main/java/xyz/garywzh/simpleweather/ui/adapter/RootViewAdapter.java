@@ -7,15 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
-
-import java.util.List;
-
 import xyz.garywzh.simpleweather.R;
-import xyz.garywzh.simpleweather.model.DataRepo;
+import xyz.garywzh.simpleweather.helper.DateHelper;
+import xyz.garywzh.simpleweather.helper.IconDrawableHelper;
+import xyz.garywzh.simpleweather.model.DataBundle;
 import xyz.garywzh.simpleweather.model.Forecast;
-import xyz.garywzh.simpleweather.ui.IconDrawableHelper;
 import xyz.garywzh.simpleweather.utils.LogUtil;
 
 /**
@@ -26,17 +23,23 @@ public class RootViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public static final int TYPE_OVERVIEW = 1;
     public static final int TYPE_DAILY = 2;
+    public static final int TYPE_FOOTER = 3;
 
-    private DataRepo mDataRepo;
+    private DataBundle mDataBundle;
+    private OnFooterClickListener mListener;
 
-    public void setData(DataRepo dataRepo) {
-        mDataRepo = dataRepo;
+    public RootViewAdapter(OnFooterClickListener listener) {
+        mListener = listener;
+    }
+
+    public void setData(DataBundle dataBundle) {
+        mDataBundle = dataBundle;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return mDataRepo == null ? 0 : 2;
+        return mDataBundle == null ? 0 : 3;
     }
 
     @Override
@@ -46,6 +49,8 @@ public class RootViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 return TYPE_OVERVIEW;
             case 1:
                 return TYPE_DAILY;
+            case 2:
+                return TYPE_FOOTER;
             default:
                 LogUtil.e(TAG, "unhandled position");
                 return 0;
@@ -61,6 +66,9 @@ public class RootViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             case TYPE_DAILY:
                 final View dailyCard = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_daily, parent, false);
                 return new DailyVH(dailyCard);
+            case TYPE_FOOTER:
+                final View footer = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_footer, parent, false);
+                return new FooterVH(footer, mListener);
             default:
                 LogUtil.e(TAG, "unKnown viewType");
                 return null;
@@ -70,9 +78,10 @@ public class RootViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof OverViewVH) {
-            ((OverViewVH) holder).fillData(mDataRepo);
+            ((OverViewVH) holder).fillData(mDataBundle);
         } else if (holder instanceof DailyVH) {
-            ((DailyVH) holder).fillData(mDataRepo.getForecast().daily.data);
+            ((DailyVH) holder).fillData(mDataBundle.getForecast().daily);
+        } else if (holder instanceof FooterVH) {
         } else {
             LogUtil.e(TAG, "unknown viewHolder");
         }
@@ -96,38 +105,89 @@ public class RootViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             condition = (TextView) itemView.findViewById(R.id.condition);
         }
 
-        public void fillData(DataRepo dataRepo) {
-            district.setText(dataRepo.getLocation().getDistrict());
-            city.setText(dataRepo.getLocation().getCity());
+        public void fillData(DataBundle dataBundle) {
+            district.setText(dataBundle.getLocation().district);
+            city.setText(dataBundle.getLocation().city);
             temperatureMaxMin.setText(String.format("%s %d° - %s %d°",
                     temperatureMaxMin.getContext().getString(R.string.max),
-                    (int) dataRepo.getForecast().daily.data.get(0).temperatureMax,
+                    Math.round(dataBundle.getForecast().daily.data.get(0).temperatureMax),
                     temperatureMaxMin.getContext().getString(R.string.min),
-                    (int) dataRepo.getForecast().daily.data.get(0).temperatureMin));
+                    Math.round(dataBundle.getForecast().daily.data.get(0).temperatureMin)));
             temperature.setText(String.format("%d",
-                    (int) dataRepo.getForecast().currently.temperature));
-            condition.setText(dataRepo.getForecast().currently.summary);
+                    Math.round(dataBundle.getForecast().currently.temperature)));
+            condition.setText(dataBundle.getForecast().currently.summary);
             Glide.with(conditionIcon.getContext())
-                    .load(IconDrawableHelper.getDrawable(dataRepo.getForecast().currently.icon))
+                    .load(IconDrawableHelper.getDrawable(dataBundle.getForecast().currently.icon))
                     .crossFade()
                     .into(conditionIcon);
         }
     }
 
-    public static class DailyVH extends RecyclerView.ViewHolder {
+    public static class DailyVH extends RecyclerView.ViewHolder implements DailyAdapter.OnDailyItemClickListener {
         private DailyAdapter dailyAdapter;
+        private TextView weekSummary;
+        private TextView time;
+        private TextView daySummary;
+        private TextView precipProbability;
+        private TextView humidity;
+        private TextView windSpeed;
+        private TextView pressure;
 
         public DailyVH(View itemView) {
             super(itemView);
             RecyclerView dailyRecyclerView = (RecyclerView) itemView.findViewById(R.id.daily);
             dailyRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext(),
                     LinearLayoutManager.HORIZONTAL, false));
-            dailyAdapter = new DailyAdapter();
+            dailyAdapter = new DailyAdapter(this);
             dailyRecyclerView.setAdapter(dailyAdapter);
+
+            weekSummary = (TextView) itemView.findViewById(R.id.week_summary);
+            time = (TextView) itemView.findViewById(R.id.time);
+            daySummary = (TextView) itemView.findViewById(R.id.day_summary);
+            precipProbability = (TextView) itemView.findViewById(R.id.precip_probability_content);
+            humidity = (TextView) itemView.findViewById(R.id.humidity_content);
+            windSpeed = (TextView) itemView.findViewById(R.id.wind_speed_content);
+            pressure = (TextView) itemView.findViewById(R.id.pressure_content);
         }
 
-        public void fillData(List<Forecast.DailyBean.DataBean> data) {
-            dailyAdapter.setData(data);
+        public void fillData(Forecast.DailyBean dailyBean) {
+            dailyAdapter.setData(dailyBean.data);
+            weekSummary.setText(dailyBean.summary);
+
+            setDailySheetData(dailyBean.data.get(0));
         }
+
+        @Override
+        public void onDailyItemClick(Forecast.DailyBean.DataBean dataBean) {
+            setDailySheetData(dataBean);
+        }
+
+        private void setDailySheetData(Forecast.DailyBean.DataBean dataBean) {
+            time.setText(DateHelper.getDailyDate(dataBean.time));
+            daySummary.setText(dataBean.summary);
+            precipProbability.setText(String.format("%d%%", Math.round(dataBean.precipProbability * 100)));
+            humidity.setText(String.format("%d%%", Math.round(dataBean.humidity * 100)));
+            windSpeed.setText(String.format("%s km/h", dataBean.windSpeed));
+            pressure.setText(String.format("%s hPa", dataBean.pressure));
+        }
+    }
+
+    public static class FooterVH extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private OnFooterClickListener mListener;
+
+        public FooterVH(View itemView, OnFooterClickListener listener) {
+            super(itemView);
+            mListener = listener;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            mListener.onFooterClick();
+        }
+    }
+
+    public interface OnFooterClickListener {
+        void onFooterClick();
     }
 }

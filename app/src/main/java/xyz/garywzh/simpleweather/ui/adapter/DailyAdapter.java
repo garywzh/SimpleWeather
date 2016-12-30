@@ -6,17 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
-
 import xyz.garywzh.simpleweather.R;
+import xyz.garywzh.simpleweather.helper.DateHelper;
+import xyz.garywzh.simpleweather.helper.IconDrawableHelper;
 import xyz.garywzh.simpleweather.model.Forecast;
-import xyz.garywzh.simpleweather.ui.IconDrawableHelper;
 
 /**
  * Created by garywzh on 2016/7/17.
@@ -24,7 +19,12 @@ import xyz.garywzh.simpleweather.ui.IconDrawableHelper;
 public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyItemVH> {
     public static final String TAG = DailyAdapter.class.getSimpleName();
 
+    private View.OnClickListener mListener;
     private List<Forecast.DailyBean.DataBean> mData;
+
+    public DailyAdapter(OnDailyItemClickListener listener) {
+        mListener = new OnDailyClickListener(listener);
+    }
 
     public void setData(List<Forecast.DailyBean.DataBean> data) {
         mData = data;
@@ -39,6 +39,7 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyItemVH>
     @Override
     public DailyItemVH onCreateViewHolder(ViewGroup parent, int viewType) {
         final View dailyView = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_daily_item, parent, false);
+        dailyView.setOnClickListener(mListener);
         return new DailyItemVH(dailyView);
     }
 
@@ -48,6 +49,7 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyItemVH>
     }
 
     public static class DailyItemVH extends RecyclerView.ViewHolder {
+        private View root;
         private TextView weekName;
         private ImageView icon;
         private TextView max;
@@ -55,6 +57,7 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyItemVH>
 
         public DailyItemVH(View itemView) {
             super(itemView);
+            root = itemView;
             weekName = (TextView) itemView.findViewById(R.id.week_name);
             icon = (ImageView) itemView.findViewById(R.id.condition_icon);
             max = (TextView) itemView.findViewById(R.id.max_temperature);
@@ -62,19 +65,31 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyItemVH>
         }
 
         public void fillData(Forecast.DailyBean.DataBean dataBean) {
-            weekName.setText(getDayOfWeek(dataBean.time));
-            max.setText(String.format(" %d°", (int) dataBean.temperatureMax));
-            min.setText(String.format(" %d°", (int) dataBean.temperatureMin));
+            root.setTag(dataBean);
+            weekName.setText(DateHelper.getDayOfWeek(dataBean.time));
+            max.setText(String.format(" %d°", Math.round(dataBean.temperatureMax)));
+            min.setText(String.format(" %d°", Math.round(dataBean.temperatureMin)));
             Glide.with(weekName.getContext())
                     .load(IconDrawableHelper.getDrawable(dataBean.icon))
                     .crossFade()
                     .into(icon);
         }
+    }
 
-        private String getDayOfWeek(int timeStamp) {
-            SimpleDateFormat format = new SimpleDateFormat("E");
-            format.setTimeZone(TimeZone.getDefault());
-            return format.format(new Date(timeStamp * 1000L));
+    private static class OnDailyClickListener implements View.OnClickListener {
+        OnDailyItemClickListener mListener;
+
+        public OnDailyClickListener(OnDailyItemClickListener listener) {
+            mListener = listener;
         }
+
+        @Override
+        public void onClick(View view) {
+            mListener.onDailyItemClick((Forecast.DailyBean.DataBean) view.getTag());
+        }
+    }
+
+    public interface OnDailyItemClickListener {
+        void onDailyItemClick(Forecast.DailyBean.DataBean dataBean);
     }
 }

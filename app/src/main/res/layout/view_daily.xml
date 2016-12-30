@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/cardview_margin_horizontal"
@@ -7,9 +8,186 @@
     android:layout_marginTop="@dimen/cardview_margin_vertical"
     android:layout_marginBottom="@dimen/cardview_margin_vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/daily"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/week_summary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="小雨持续至明天直至周一，且周三温度骤降到26°C。" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@android:color/darker_gray" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/daily"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@android:color/darker_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/cardview_padding"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7/18 Mon" />
+
+            <TextView
+                android:id="@+id/day_summary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                tools:text="降雨持续至下午。" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/daily_detail_padding_vertical"
+                android:paddingBottom="@dimen/daily_detail_padding_vertical">
+
+                <ImageView
+                    android:id="@+id/precip_probability_icon"
+                    android:layout_width="@dimen/daily_detail_icon_size"
+                    android:layout_height="@dimen/daily_detail_icon_size"
+                    android:src="@drawable/ic_precip_probability" />
+
+                <TextView
+                    android:id="@+id/precip_probability"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/precip_probability_icon"
+                    android:layout_marginLeft="@dimen/daily_detail_title_margin_left"
+                    android:text="@string/precip_probability" />
+
+                <TextView
+                    android:id="@+id/precip_probability_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/precip_probability"
+                    android:layout_below="@id/precip_probability"
+                    android:layout_marginTop="@dimen/daily_detail_space"
+                    tools:text="28%" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/daily_detail_padding_vertical"
+                android:paddingBottom="@dimen/daily_detail_padding_vertical">
+
+                <ImageView
+                    android:id="@+id/humidity_icon"
+                    android:layout_width="@dimen/daily_detail_icon_size"
+                    android:layout_height="@dimen/daily_detail_icon_size"
+                    android:src="@drawable/ic_humidity" />
+
+                <TextView
+                    android:id="@+id/humidity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/humidity_icon"
+                    android:layout_marginLeft="@dimen/daily_detail_title_margin_left"
+                    android:text="@string/humidity" />
+
+                <TextView
+                    android:id="@+id/humidity_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/humidity"
+                    android:layout_below="@id/humidity"
+                    android:layout_marginTop="@dimen/daily_detail_space"
+                    tools:text="10%" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/daily_detail_padding_vertical"
+                android:paddingBottom="@dimen/daily_detail_padding_vertical">
+
+                <ImageView
+                    android:id="@+id/wind_icon"
+                    android:layout_width="@dimen/daily_detail_icon_size"
+                    android:layout_height="@dimen/daily_detail_icon_size"
+                    android:src="@drawable/ic_wind" />
+
+                <TextView
+                    android:id="@+id/windSpeed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/wind_icon"
+                    android:layout_marginLeft="@dimen/daily_detail_title_margin_left"
+                    android:text="@string/windSpeed" />
+
+                <TextView
+                    android:id="@+id/wind_speed_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/windSpeed"
+                    android:layout_below="@id/windSpeed"
+                    android:layout_marginTop="@dimen/daily_detail_space"
+                    tools:text="1.2km/h" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/daily_detail_padding_vertical"
+                android:paddingBottom="@dimen/daily_detail_padding_vertical">
+
+                <ImageView
+                    android:id="@+id/pressure_icon"
+                    android:layout_width="@dimen/daily_detail_icon_size"
+                    android:layout_height="@dimen/daily_detail_icon_size"
+                    android:src="@drawable/ic_pressure" />
+
+                <TextView
+                    android:id="@+id/pressure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/pressure_icon"
+                    android:layout_marginLeft="@dimen/daily_detail_title_margin_left"
+                    android:text="@string/pressure" />
+
+                <TextView
+                    android:id="@+id/pressure_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/pressure"
+                    android:layout_below="@id/pressure"
+                    android:layout_marginTop="@dimen/daily_detail_space"
+                    tools:text="999.71hPa" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>

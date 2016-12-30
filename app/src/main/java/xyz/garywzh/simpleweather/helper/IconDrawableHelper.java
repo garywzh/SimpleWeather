@@ -1,4 +1,4 @@
-package xyz.garywzh.simpleweather.ui;
+package xyz.garywzh.simpleweather.helper;
 
 import xyz.garywzh.simpleweather.R;
 

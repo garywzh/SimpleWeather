@@ -3,7 +3,7 @@ package xyz.garywzh.simpleweather.model;
 /**
  * Created by garywzh on 2016/7/15.
  */
-public class GeoInfo {
+public class AddressInfo {
 
     /**
      * status : 0

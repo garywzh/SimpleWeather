@@ -3,4 +3,26 @@
     <string name="app_name">简单天气</string>
     <string name="max">最高</string>
     <string name="min">最低</string>
+    <string name="temperature">温度</string>
+    <string name="precip_probability">降水概率</string>
+    <string name="humidity">相对湿度</string>
+    <string name="cloud_cover">云量</string>
+    <string name="pressure">气压</string>
+    <string name="ozone">臭氧</string>
+    <string name="windSpeed">风速</string>
+    <string name="fetching_data">正在获取最新天气信息</string>
+    <string name="action_settings">设置</string>
+    <string name="action_about">关于</string>
+    <string name="alert_dialog_ok">确定</string>
+    <string name="alert_dialog_cancel">取消</string>
+    <string name="dialog_title">输入地点</string>
+    <string name="current_site">本地</string>
+    <string name="add">添加</string>
+    <string name="action_manage">管理</string>
+    <string name="title_activity_address_list">管理</string>
+    <string name="title_activity_settings">设置</string>
+    <string name="permission_rationale_title">We need this permission</string>
+    <string name="permission_rationale_message">Need this permission to offer current place forecast</string>
+    <string name="permission_rationale_settings_button_text">SETTINGS</string>
+    <string name="location_permission_denied_feedback">Location permission is for offerring current forecast</string>
 </resources>
