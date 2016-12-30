@@ -15,7 +15,9 @@ import xyz.garywzh.simpleweather.R;
 /**
  * Created by garywzh on 2016/7/27.
  */
-public class AddItemAlertDialogFragment extends DialogFragment implements DialogInterface.OnClickListener {
+public class AddItemAlertDialogFragment extends DialogFragment implements
+    DialogInterface.OnClickListener {
+
     private EditText input;
 
     public static AddItemAlertDialogFragment newInstance() {
@@ -28,7 +30,8 @@ public class AddItemAlertDialogFragment extends DialogFragment implements Dialog
         int margin_in_dp = 24;
         final float scale = getResources().getDisplayMetrics().density;
         int margin_in_px = (int) (margin_in_dp * scale + 0.5f);
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.leftMargin = margin_in_px;
         params.rightMargin = margin_in_px;
         input = new EditText(activity);
@@ -37,17 +40,18 @@ public class AddItemAlertDialogFragment extends DialogFragment implements Dialog
         FrameLayout container = new FrameLayout(activity);
         container.addView(input);
         return new AlertDialog.Builder(getActivity())
-                .setTitle(R.string.dialog_title)
-                .setView(container)
-                .setPositiveButton(R.string.alert_dialog_ok, this)
-                .setNegativeButton(R.string.alert_dialog_cancel, this)
-                .create();
+            .setTitle(R.string.dialog_title)
+            .setView(container)
+            .setPositiveButton(R.string.alert_dialog_ok, this)
+            .setNegativeButton(R.string.alert_dialog_cancel, this)
+            .create();
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        getDialog().getWindow()
+            .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
 
     @Override
@@ -57,13 +61,15 @@ public class AddItemAlertDialogFragment extends DialogFragment implements Dialog
                 break;
             case Dialog.BUTTON_POSITIVE:
                 String address = input.getText().toString().trim();
-                if (!address.isEmpty())
+                if (!address.isEmpty()) {
                     ((OnAddAddressListener) getActivity()).OnAddAddress(input.getText().toString());
+                }
                 break;
         }
     }
 
     public interface OnAddAddressListener {
+
         void OnAddAddress(String address);
     }
 }

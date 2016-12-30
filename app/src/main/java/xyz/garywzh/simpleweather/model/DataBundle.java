@@ -4,6 +4,7 @@ package xyz.garywzh.simpleweather.model;
  * Created by garywzh on 2016/7/17.
  */
 public class DataBundle {
+
     private SimpleLocation location;
     private Forecast forecast;
 

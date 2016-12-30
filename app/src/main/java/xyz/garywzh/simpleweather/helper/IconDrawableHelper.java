@@ -6,6 +6,7 @@ import xyz.garywzh.simpleweather.R;
  * Created by garywzh on 2016/7/15.
  */
 public class IconDrawableHelper {
+
     public static int getDrawable(String icon) {
         switch (icon) {
             case "clear-day":

@@ -32,7 +32,9 @@ import xyz.garywzh.simpleweather.ui.adapter.AddressListAdapter;
 import xyz.garywzh.simpleweather.ui.fragment.AddItemAlertDialogFragment;
 import xyz.garywzh.simpleweather.utils.LogUtil;
 
-public class ManageAddressActivity extends AppCompatActivity implements AddItemAlertDialogFragment.OnAddAddressListener {
+public class ManageAddressActivity extends AppCompatActivity implements
+    AddItemAlertDialogFragment.OnAddAddressListener {
+
     private static final String TAG = ManageAddressActivity.class.getSimpleName();
 
     private RecyclerView mRecyclerView;
@@ -65,30 +67,30 @@ public class ManageAddressActivity extends AppCompatActivity implements AddItemA
 
     private void refreshAddressList() {
         Observable
-                .fromCallable(new Func0<List<String>>() {
-                    @Override
-                    public List<String> call() {
-                        return Repository.getInstance().getAddressList();
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<String>>() {
-                    @Override
-                    public void onCompleted() {
+            .fromCallable(new Func0<List<String>>() {
+                @Override
+                public List<String> call() {
+                    return Repository.getInstance().getAddressList();
+                }
+            })
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Subscriber<List<String>>() {
+                @Override
+                public void onCompleted() {
 
-                    }
+                }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                    }
+                @Override
+                public void onError(Throwable e) {
+                    e.printStackTrace();
+                }
 
-                    @Override
-                    public void onNext(List<String> strings) {
-                        mAdapter.setData(strings);
-                    }
-                });
+                @Override
+                public void onNext(List<String> strings) {
+                    mAdapter.setData(strings);
+                }
+            });
 
     }
 
@@ -98,29 +100,29 @@ public class ManageAddressActivity extends AppCompatActivity implements AddItemA
 
     private Subscription loadDataWithAddress(String address) {
         return NetworkHelper.fetchDataWithAddress(address)
-                .doOnSubscribe(new Action0() {
-                    @Override
-                    public void call() {
-                        LogUtil.d(TAG, "fetching data");
-                    }
-                })
-                .subscribe(new Subscriber<DataBundle>() {
-                    @Override
-                    public void onCompleted() {
-                    }
+            .doOnSubscribe(new Action0() {
+                @Override
+                public void call() {
+                    LogUtil.d(TAG, "fetching data");
+                }
+            })
+            .subscribe(new Subscriber<DataBundle>() {
+                @Override
+                public void onCompleted() {
+                }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                    }
+                @Override
+                public void onError(Throwable e) {
+                    e.printStackTrace();
+                }
 
-                    @Override
-                    public void onNext(DataBundle bundle) {
-                        LogUtil.d(TAG, "got data");
+                @Override
+                public void onNext(DataBundle bundle) {
+                    LogUtil.d(TAG, "got data");
 
-                        refreshAddressList();
-                    }
-                });
+                    refreshAddressList();
+                }
+            });
     }
 
     private void showAddItemDialog() {
@@ -153,7 +155,8 @@ public class ManageAddressActivity extends AppCompatActivity implements AddItemA
     }
 
     private void setUpItemTouchHelper() {
-        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT ) {
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(
+            0, ItemTouchHelper.LEFT) {
 
             // we want to cache these and not allocate anything repeatedly in the onChildDraw method
             Drawable background;
@@ -163,15 +166,18 @@ public class ManageAddressActivity extends AppCompatActivity implements AddItemA
 
             private void init() {
                 background = new ColorDrawable(Color.BLUE);
-                xMark = ContextCompat.getDrawable(ManageAddressActivity.this, R.drawable.ic_clear_24dp);
+                xMark = ContextCompat
+                    .getDrawable(ManageAddressActivity.this, R.drawable.ic_clear_24dp);
                 xMark.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
-                xMarkMargin = (int) ManageAddressActivity.this.getResources().getDimension(R.dimen.ic_clear_margin);
+                xMarkMargin = (int) ManageAddressActivity.this.getResources()
+                    .getDimension(R.dimen.ic_clear_margin);
                 initiated = true;
             }
 
             // not important, we don't want drag & drop
             @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+                RecyclerView.ViewHolder target) {
                 return false;
             }
 
@@ -188,7 +194,9 @@ public class ManageAddressActivity extends AppCompatActivity implements AddItemA
             }
 
             @Override
-            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+            public void onChildDraw(Canvas c, RecyclerView recyclerView,
+                RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState,
+                boolean isCurrentlyActive) {
                 View itemView = viewHolder.itemView;
 
                 // not sure why, but this method get's called for viewholder that are already swiped away
@@ -202,7 +210,8 @@ public class ManageAddressActivity extends AppCompatActivity implements AddItemA
                 }
 
                 // draw red background
-                background.setBounds(itemView.getRight() + (int) dX, itemView.getTop(), itemView.getRight(), itemView.getBottom());
+                background.setBounds(itemView.getRight() + (int) dX, itemView.getTop(),
+                    itemView.getRight(), itemView.getBottom());
                 background.draw(c);
 
                 // draw x mark
@@ -218,7 +227,8 @@ public class ManageAddressActivity extends AppCompatActivity implements AddItemA
 
                 xMark.draw(c);
 
-                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState,
+                    isCurrentlyActive);
             }
 
         };
@@ -284,16 +294,20 @@ public class ManageAddressActivity extends AppCompatActivity implements AddItemA
 
                     if (lastViewComingDown != null && firstViewComingUp != null) {
                         // views are coming down AND going up to fill the void
-                        top = lastViewComingDown.getBottom() + (int) lastViewComingDown.getTranslationY();
-                        bottom = firstViewComingUp.getTop() + (int) firstViewComingUp.getTranslationY();
+                        top = lastViewComingDown.getBottom() + (int) lastViewComingDown
+                            .getTranslationY();
+                        bottom =
+                            firstViewComingUp.getTop() + (int) firstViewComingUp.getTranslationY();
                     } else if (lastViewComingDown != null) {
                         // views are going down to fill the void
-                        top = lastViewComingDown.getBottom() + (int) lastViewComingDown.getTranslationY();
+                        top = lastViewComingDown.getBottom() + (int) lastViewComingDown
+                            .getTranslationY();
                         bottom = lastViewComingDown.getBottom();
                     } else if (firstViewComingUp != null) {
                         // views are coming up to fill the void
                         top = firstViewComingUp.getTop();
-                        bottom = firstViewComingUp.getTop() + (int) firstViewComingUp.getTranslationY();
+                        bottom =
+                            firstViewComingUp.getTop() + (int) firstViewComingUp.getTranslationY();
                     }
 
                     background.setBounds(left, top, right, bottom);

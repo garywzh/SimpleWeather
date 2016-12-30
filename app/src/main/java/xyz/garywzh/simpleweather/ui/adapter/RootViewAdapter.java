@@ -19,6 +19,7 @@ import xyz.garywzh.simpleweather.utils.LogUtil;
  * Created by garywzh on 2016/7/17.
  */
 public class RootViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
     public static final String TAG = RootViewAdapter.class.getSimpleName();
 
     public static final int TYPE_OVERVIEW = 1;
@@ -61,13 +62,16 @@ public class RootViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
             case TYPE_OVERVIEW:
-                final View OverViewCard = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_overview, parent, false);
+                final View OverViewCard = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.view_overview, parent, false);
                 return new OverViewVH(OverViewCard);
             case TYPE_DAILY:
-                final View dailyCard = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_daily, parent, false);
+                final View dailyCard = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.view_daily, parent, false);
                 return new DailyVH(dailyCard);
             case TYPE_FOOTER:
-                final View footer = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_footer, parent, false);
+                final View footer = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.view_footer, parent, false);
                 return new FooterVH(footer, mListener);
             default:
                 LogUtil.e(TAG, "unKnown viewType");
@@ -88,6 +92,7 @@ public class RootViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public static class OverViewVH extends RecyclerView.ViewHolder {
+
         private TextView district;
         private TextView city;
         private TextView temperatureMaxMin;
@@ -109,21 +114,23 @@ public class RootViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             district.setText(dataBundle.getLocation().district);
             city.setText(dataBundle.getLocation().city);
             temperatureMaxMin.setText(String.format("%s %d° - %s %d°",
-                    temperatureMaxMin.getContext().getString(R.string.max),
-                    Math.round(dataBundle.getForecast().daily.data.get(0).temperatureMax),
-                    temperatureMaxMin.getContext().getString(R.string.min),
-                    Math.round(dataBundle.getForecast().daily.data.get(0).temperatureMin)));
+                temperatureMaxMin.getContext().getString(R.string.max),
+                Math.round(dataBundle.getForecast().daily.data.get(0).temperatureMax),
+                temperatureMaxMin.getContext().getString(R.string.min),
+                Math.round(dataBundle.getForecast().daily.data.get(0).temperatureMin)));
             temperature.setText(String.format("%d",
-                    Math.round(dataBundle.getForecast().currently.temperature)));
+                Math.round(dataBundle.getForecast().currently.temperature)));
             condition.setText(dataBundle.getForecast().currently.summary);
             Glide.with(conditionIcon.getContext())
-                    .load(IconDrawableHelper.getDrawable(dataBundle.getForecast().currently.icon))
-                    .crossFade()
-                    .into(conditionIcon);
+                .load(IconDrawableHelper.getDrawable(dataBundle.getForecast().currently.icon))
+                .crossFade()
+                .into(conditionIcon);
         }
     }
 
-    public static class DailyVH extends RecyclerView.ViewHolder implements DailyAdapter.OnDailyItemClickListener {
+    public static class DailyVH extends RecyclerView.ViewHolder implements
+        DailyAdapter.OnDailyItemClickListener {
+
         private DailyAdapter dailyAdapter;
         private TextView weekSummary;
         private TextView time;
@@ -137,7 +144,7 @@ public class RootViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             super(itemView);
             RecyclerView dailyRecyclerView = (RecyclerView) itemView.findViewById(R.id.daily);
             dailyRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext(),
-                    LinearLayoutManager.HORIZONTAL, false));
+                LinearLayoutManager.HORIZONTAL, false));
             dailyAdapter = new DailyAdapter(this);
             dailyRecyclerView.setAdapter(dailyAdapter);
 
@@ -165,7 +172,8 @@ public class RootViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private void setDailySheetData(Forecast.DailyBean.DataBean dataBean) {
             time.setText(DateHelper.getDailyDate(dataBean.time));
             daySummary.setText(dataBean.summary);
-            precipProbability.setText(String.format("%d%%", Math.round(dataBean.precipProbability * 100)));
+            precipProbability
+                .setText(String.format("%d%%", Math.round(dataBean.precipProbability * 100)));
             humidity.setText(String.format("%d%%", Math.round(dataBean.humidity * 100)));
             windSpeed.setText(String.format("%s km/h", dataBean.windSpeed));
             pressure.setText(String.format("%s hPa", dataBean.pressure));
@@ -173,6 +181,7 @@ public class RootViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public static class FooterVH extends RecyclerView.ViewHolder implements View.OnClickListener {
+
         private OnFooterClickListener mListener;
 
         public FooterVH(View itemView, OnFooterClickListener listener) {
@@ -188,6 +197,7 @@ public class RootViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public interface OnFooterClickListener {
+
         void onFooterClick();
     }
 }

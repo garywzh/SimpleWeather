@@ -4,6 +4,7 @@ package xyz.garywzh.simpleweather.model;
  * Created by garywzh on 2016/7/22.
  */
 public class SimpleLocation {
+
     public String city;
     public String district;
     public String latitude;

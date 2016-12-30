@@ -17,6 +17,7 @@ import xyz.garywzh.simpleweather.model.Forecast;
  * Created by garywzh on 2016/7/17.
  */
 public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyItemVH> {
+
     public static final String TAG = DailyAdapter.class.getSimpleName();
 
     private View.OnClickListener mListener;
@@ -38,7 +39,8 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyItemVH>
 
     @Override
     public DailyItemVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View dailyView = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_daily_item, parent, false);
+        final View dailyView = LayoutInflater.from(parent.getContext())
+            .inflate(R.layout.view_daily_item, parent, false);
         dailyView.setOnClickListener(mListener);
         return new DailyItemVH(dailyView);
     }
@@ -49,6 +51,7 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyItemVH>
     }
 
     public static class DailyItemVH extends RecyclerView.ViewHolder {
+
         private View root;
         private TextView weekName;
         private ImageView icon;
@@ -70,13 +73,14 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyItemVH>
             max.setText(String.format(" %d°", Math.round(dataBean.temperatureMax)));
             min.setText(String.format(" %d°", Math.round(dataBean.temperatureMin)));
             Glide.with(weekName.getContext())
-                    .load(IconDrawableHelper.getDrawable(dataBean.icon))
-                    .crossFade()
-                    .into(icon);
+                .load(IconDrawableHelper.getDrawable(dataBean.icon))
+                .crossFade()
+                .into(icon);
         }
     }
 
     private static class OnDailyClickListener implements View.OnClickListener {
+
         OnDailyItemClickListener mListener;
 
         public OnDailyClickListener(OnDailyItemClickListener listener) {
@@ -90,6 +94,7 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyItemVH>
     }
 
     public interface OnDailyItemClickListener {
+
         void onDailyItemClick(Forecast.DailyBean.DataBean dataBean);
     }
 }

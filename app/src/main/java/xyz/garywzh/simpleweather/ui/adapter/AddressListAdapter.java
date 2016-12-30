@@ -12,6 +12,7 @@ import xyz.garywzh.simpleweather.R;
  * Created by garywzh on 2016/7/28.
  */
 public class AddressListAdapter extends RecyclerView.Adapter<AddressListAdapter.AddressItemVH> {
+
     public static final String TAG = AddressListAdapter.class.getSimpleName();
 
     private List<String> mData;
@@ -28,7 +29,8 @@ public class AddressListAdapter extends RecyclerView.Adapter<AddressListAdapter.
 
     @Override
     public AddressItemVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View addressView = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_address_item, parent, false);
+        final View addressView = LayoutInflater.from(parent.getContext())
+            .inflate(R.layout.view_address_item, parent, false);
         return new AddressItemVH(addressView);
     }
 
@@ -43,6 +45,7 @@ public class AddressListAdapter extends RecyclerView.Adapter<AddressListAdapter.
     }
 
     public static class AddressItemVH extends RecyclerView.ViewHolder {
+
         private TextView mAddress;
 
         public AddressItemVH(View itemView) {

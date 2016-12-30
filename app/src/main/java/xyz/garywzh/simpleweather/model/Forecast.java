@@ -12,21 +12,10 @@ public class Forecast {
     public String timezone;
     public int offset;
     /**
-     * time : 1468560115
-     * summary : Mostly Cloudy
-     * icon : partly-cloudy-day
-     * precipIntensity : 7.0E-4
-     * precipProbability : 0.01
-     * precipType : rain
-     * temperature : 83.4
-     * apparentTemperature : 82.26
-     * dewPoint : 54.12
-     * humidity : 0.37
-     * windSpeed : 4.03
-     * windBearing : 169
-     * cloudCover : 0.84
-     * pressure : 1003.18
-     * ozone : 298.99
+     * time : 1468560115 summary : Mostly Cloudy icon : partly-cloudy-day precipIntensity : 7.0E-4
+     * precipProbability : 0.01 precipType : rain temperature : 83.4 apparentTemperature : 82.26
+     * dewPoint : 54.12 humidity : 0.37 windSpeed : 4.03 windBearing : 169 cloudCover : 0.84
+     * pressure : 1003.18 ozone : 298.99
      */
 
     public CurrentlyBean currently;
@@ -35,14 +24,14 @@ public class Forecast {
 
     public DailyBean daily;
     /**
-     * sources : ["gfs","cmc","fnmoc","isd"]
-     * isd-stations : ["544290-99999","545230-99999","545290-99999","545340-99999","546230-99999"]
+     * sources : ["gfs","cmc","fnmoc","isd"] isd-stations : ["544290-99999","545230-99999","545290-99999","545340-99999","546230-99999"]
      * units : us
      */
 
     public FlagsBean flags;
 
     public static class CurrentlyBean {
+
         public int time;
         public String summary;
         public String icon;
@@ -61,28 +50,20 @@ public class Forecast {
     }
 
     public static class HourlyBean {
+
         public String summary;
         public String icon;
         /**
-         * time : 1468558800
-         * summary : Mostly Cloudy
-         * icon : partly-cloudy-day
-         * precipIntensity : 0
-         * precipProbability : 0
-         * temperature : 83.02
-         * apparentTemperature : 82.01
-         * dewPoint : 54.31
-         * humidity : 0.37
-         * windSpeed : 3.87
-         * windBearing : 162
-         * cloudCover : 0.86
-         * pressure : 1003.29
+         * time : 1468558800 summary : Mostly Cloudy icon : partly-cloudy-day precipIntensity : 0
+         * precipProbability : 0 temperature : 83.02 apparentTemperature : 82.01 dewPoint : 54.31
+         * humidity : 0.37 windSpeed : 3.87 windBearing : 162 cloudCover : 0.86 pressure : 1003.29
          * ozone : 297.71
          */
 
         public java.util.List<DataBean> data;
 
         public static class DataBean {
+
             public int time;
             public String summary;
             public String icon;
@@ -101,40 +82,24 @@ public class Forecast {
     }
 
     public static class DailyBean {
+
         public String summary;
         public String icon;
         /**
-         * time : 1468512000
-         * summary : Light rain in the morning.
-         * icon : rain
-         * sunriseTime : 1468529640
-         * sunsetTime : 1468582564
-         * moonPhase : 0.34
-         * precipIntensity : 0.0034
-         * precipIntensityMax : 0.0116
-         * precipIntensityMaxTime : 1468530000
-         * precipProbability : 0.45
-         * precipType : rain
-         * temperatureMin : 66.03
-         * temperatureMinTime : 1468594800
-         * temperatureMax : 84.22
-         * temperatureMaxTime : 1468566000
-         * apparentTemperatureMin : 66.03
-         * apparentTemperatureMinTime : 1468594800
-         * apparentTemperatureMax : 82.78
-         * apparentTemperatureMaxTime : 1468566000
-         * dewPoint : 59.44
-         * humidity : 0.61
-         * windSpeed : 0.84
-         * windBearing : 247
-         * cloudCover : 0.82
-         * pressure : 1003.76
-         * ozone : 296.74
+         * time : 1468512000 summary : Light rain in the morning. icon : rain sunriseTime :
+         * 1468529640 sunsetTime : 1468582564 moonPhase : 0.34 precipIntensity : 0.0034
+         * precipIntensityMax : 0.0116 precipIntensityMaxTime : 1468530000 precipProbability : 0.45
+         * precipType : rain temperatureMin : 66.03 temperatureMinTime : 1468594800 temperatureMax :
+         * 84.22 temperatureMaxTime : 1468566000 apparentTemperatureMin : 66.03
+         * apparentTemperatureMinTime : 1468594800 apparentTemperatureMax : 82.78
+         * apparentTemperatureMaxTime : 1468566000 dewPoint : 59.44 humidity : 0.61 windSpeed : 0.84
+         * windBearing : 247 cloudCover : 0.82 pressure : 1003.76 ozone : 296.74
          */
 
         public java.util.List<DataBean> data;
 
         public static class DataBean {
+
             public int time;
             public String summary;
             public String icon;
@@ -167,8 +132,7 @@ public class Forecast {
     public static class FlagsBean {
 
         /**
-         * sources : ["gfs","cmc","fnmoc","isd"]
-         * isd-stations : ["544290-99999","545230-99999","545290-99999","545340-99999","546230-99999"]
+         * sources : ["gfs","cmc","fnmoc","isd"] isd-stations : ["544290-99999","545230-99999","545290-99999","545340-99999","546230-99999"]
          * units : us
          */
 

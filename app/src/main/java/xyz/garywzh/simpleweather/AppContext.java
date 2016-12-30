@@ -8,6 +8,7 @@ import android.os.Bundle;
  * Created by garywzh on 2016/7/18.
  */
 public class AppContext extends Application {
+
     public static final String TAG = AppContext.class.getSimpleName();
 
     private static AppContext sInstance;
@@ -21,8 +22,8 @@ public class AppContext extends Application {
 
         try {
             Bundle bundle = getPackageManager()
-                    .getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA)
-                    .metaData;
+                .getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA)
+                .metaData;
             mTencentMapKey = bundle.getString("TencentMapSDK");
             mForecastKey = bundle.getString("ForecastApiKey");
         } catch (PackageManager.NameNotFoundException e) {

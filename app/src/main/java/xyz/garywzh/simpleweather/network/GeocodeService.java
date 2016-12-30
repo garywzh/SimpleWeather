@@ -13,9 +13,11 @@ public interface GeocodeService {
 
     //逆地址解析
     @GET("./")
-    Observable<AddressInfo> getAddress(@Query("key") String tencentMapKey, @Query("location") String location);
+    Observable<AddressInfo> getAddress(@Query("key") String tencentMapKey,
+        @Query("location") String location);
 
     //地址解析
     @GET("./")
-    Observable<LocationInfo> getLocation(@Query("key") String tencentMapKey, @Query("address") String address);
+    Observable<LocationInfo> getLocation(@Query("key") String tencentMapKey,
+        @Query("address") String address);
 }
